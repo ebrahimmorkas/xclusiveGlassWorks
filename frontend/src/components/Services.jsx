@@ -4,25 +4,19 @@ const Services = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    const section = document.getElementById('services-section');
-    if (section) {
-      observer.observe(section);
-    }
-
-    return () => {
+    const handleScroll = () => {
+      const section = document.getElementById('services-section');
       if (section) {
-        observer.unobserve(section);
+        const rect = section.getBoundingClientRect();
+        const isInView = rect.top <= window.innerHeight && rect.bottom >= 0;
+        setIsVisible(isInView);
       }
     };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const services = [
@@ -64,7 +58,6 @@ const Services = () => {
   return (
     <div id="services-section" className="py-20 bg-gradient-to-b from-white to-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">Our Services</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -72,8 +65,7 @@ const Services = () => {
           </p>
         </div>
 
-        {/* Services Cards */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 justify-items-center">
           {services.map((service, index) => (
             <div
               key={index}
@@ -81,8 +73,8 @@ const Services = () => {
                 isVisible 
                   ? 'translate-y-0 opacity-100' 
                   : '-translate-y-20 opacity-0'
-              } transition-all duration-700 delay-${index * 200} backdrop-blur-sm bg-white/40 rounded-xl p-6 shadow-xl border border-white/20 hover:shadow-2xl hover:-translate-y-2 hover:bg-white/50`}
-              style={{ transitionDelay: `${index * 200}ms` }}
+              } transition-all duration-500 ease-out backdrop-blur-sm bg-white/40 rounded-xl p-6 shadow-xl border border-white/20 hover:shadow-2xl hover:-translate-y-2 hover:bg-white/50 w-full max-w-sm`}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className="text-4xl mb-4">{service.icon}</div>
               <h3 className="text-xl font-semibold text-gray-800 mb-3">

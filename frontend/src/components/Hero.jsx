@@ -32,7 +32,7 @@ const Hero = () => {
               <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 font-medium hover:shadow-lg">
                 Our Services
               </button>
-              <button className="group relative px-6 py-2 rounded-lg font-medium overflow-hidden transition-all duration-300">
+              <button className="group relative px-6 py-2 rounded-lg font-medium overflow-hidden transition-all duration-300 border-solid border-2 border-blue-500">
                 {/* Background layers */}
                 <div className="absolute inset-0 bg-white/50 backdrop-blur-sm transition-all duration-300 group-hover:bg-white/70"></div>
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from 'react';
 
-const Services = () => {
+const ServicesSection = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const section = document.getElementById('services-section');
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    const section = document.getElementById('services-section');
+    if (section) {
+      observer.observe(section);
+    }
+
+    return () => {
       if (section) {
-        const rect = section.getBoundingClientRect();
-        const isInView = rect.top <= window.innerHeight && rect.bottom >= 0;
-        setIsVisible(isInView);
+        observer.unobserve(section);
       }
     };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check
-
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const services = [
     {
-      title: "Custom Glass Installation",
+      title: "Glass Installation & Supplier",
       description: "Expert installation of premium glass units for residential and commercial spaces. From windows to structural glazing.",
       icon: "🏗️",
       features: [
@@ -58,6 +64,7 @@ const Services = () => {
   return (
     <div id="services-section" className="py-20 bg-gradient-to-b from-white to-blue-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">Our Services</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -65,7 +72,8 @@ const Services = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 justify-items-center">
+        {/* Services Cards */}
+        <div className="grid md:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div
               key={index}
@@ -73,8 +81,8 @@ const Services = () => {
                 isVisible 
                   ? 'translate-y-0 opacity-100' 
                   : '-translate-y-20 opacity-0'
-              } transition-all duration-500 ease-out backdrop-blur-sm bg-white/40 rounded-xl p-6 shadow-xl border border-white/20 hover:shadow-2xl hover:-translate-y-2 hover:bg-white/50 w-full max-w-sm`}
-              style={{ transitionDelay: `${index * 150}ms` }}
+              } transition-all duration-70 delay-${index * 200} backdrop-blur-sm bg-white/40 rounded-xl p-6 shadow-xl border border-white/20 hover:shadow-2xl hover:-translate-y-2 hover:bg-white/50 hover:border-blue-500`}
+              style={{ transitionDelay: `${index * 200}ms` }}
             >
               <div className="text-4xl mb-4">{service.icon}</div>
               <h3 className="text-xl font-semibold text-gray-800 mb-3">
@@ -99,4 +107,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default ServicesSection;

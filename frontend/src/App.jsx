@@ -7,6 +7,7 @@ import Hero from './components/Hero'
 import Services from './components/Services'
 import DesignGallery from './components/DesignGallery'
 import TopCustomers from './components/TopCustomers'
+import ContactUs from './components/ContactUs'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -18,6 +19,7 @@ function App() {
       <Services />
       <DesignGallery />
       <TopCustomers />
+      <ContactUs />
     </div>
   )
 }

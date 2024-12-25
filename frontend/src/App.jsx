@@ -8,6 +8,7 @@ import Services from './components/Services'
 import DesignGallery from './components/DesignGallery'
 import TopCustomers from './components/TopCustomers'
 import ContactUs from './components/ContactUs'
+import Footer from './components/Footer'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,6 +21,7 @@ function App() {
       <DesignGallery />
       <TopCustomers />
       <ContactUs />
+      <Footer />
     </div>
   )
 }
